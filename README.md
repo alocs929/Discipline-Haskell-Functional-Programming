@@ -1,3 +1,5 @@
+# Atividades desenvolvidas durante a disciplina de Programação Funcional usando a linguagem Haskell
+
 ## Answers
 
 ## Remove
