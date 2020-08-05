@@ -75,7 +75,7 @@ take 10 primosPalindromo == [2,3,5,7,11,101,131,151,181,191]
 
 ## PrimosGemeos
 
-**Números primos gémeos**, na teoria dos números, são dois números primos cuja diferença é igual a dois. Os primeiros pares de números primos gémeos são (3, 5),(5,7),(11, 13),(17,19),(29,31),(41, 43),(59, 61),(71, 73),(101,103),(107, 109),(137, 139).
+Números primos gémeos, na teoria dos números, são dois números primos cuja diferença é igual a dois. Os primeiros pares de números primos gémeos são (3, 5),(5,7),(11, 13),(17,19),(29,31),(41, 43),(59, 61),(71, 73),(101,103),(107, 109),(137, 139).
 
 Defina a função primosGemeos :: [(Integer,Integer)] tal que (primosGemeos) devolve a lista de todos os números primos gémeos.
 
