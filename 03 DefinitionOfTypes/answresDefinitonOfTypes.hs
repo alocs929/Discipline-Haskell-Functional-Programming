@@ -28,18 +28,17 @@ showExpr (Mod exp1 exp2) = "(" ++ showExpr(exp1) ++ " % " ++ showExpr(exp2) ++ "
 
 
 -- linkedList 
-
-data LinkedList a = Vazia | No a (LinkedList a) deriving (Eq, Show)
-fromList [x] = No x Vazia
-fromList (x:xs) = No x (fromList xs)
+data LinkedList a = Vazia | Node a (LinkedList a) deriving (Eq, Show)
+fromList [x] = Node x Vazia
+fromList (x:xs) = Node x (fromList xs)
 toList :: LinkedList a -> [a]
 toList Vazia = []
-toList (No x ab) = x : toList ab
+toList (Node x ab) = x : toList ab
 append :: a -> LinkedList a -> LinkedList a
-append a (No x Vazia) = No x (No a Vazia)
-append a (No x yz) = No x (append a yz)   
+append a (Node x Vazia) = Node x (Node a Vazia)
+append a (Node x yz) = Node x (append a yz)   
 reverseLinkedList :: LinkedList a -> LinkedList a
-reverseLinkedList (No x yz) =  fromList(reverse(toList (No x yz)))
+reverseLinkedList (Node x yz) =  fromList(reverse(toList (Node x yz)))
 
 -- mobile 
 data Mobile = Pendente Int | Barra Mobile Mobile deriving (Eq, Show)
