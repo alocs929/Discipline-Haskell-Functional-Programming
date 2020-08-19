@@ -1,7 +1,34 @@
-
 -- arvoreExpressao 
+data ArvoreExpressao = No (Int->Int->Int) ArvoreExpressao ArvoreExpressao| Folha Int
+
+data Expr = Val Int
+  | Soma Expr Expr
+  | Mult Expr Expr
+  | Div Expr Expr
+  | Sub Expr Expr
+  | Mod Expr Expr
+  deriving (Read,Eq,Show)
+
+eval :: ArvoreExpressao -> Int
+eval (Folha x) = x
+eval (No (+) exp1 exp2) = eval (exp1) + eval (exp2)
+eval (No (-) exp1 exp2) = eval (exp1) - eval (exp2)
+eval (No (*) exp1 exp2) = eval (exp1) * eval (exp2)
+eval (No (div) exp1 exp2) = div (eval (exp1)) (eval (exp2))
+eval (No (mod) exp1 exp2) = mod (eval exp1) (eval exp2)
+
+-- ex1 = Mod (Mult (Val 3) (Val 4)) (( Div (Val 4) (Val 3) ))
+showExpr :: Expr -> String
+showExpr (Val x) = show x
+showExpr (Soma exp1 exp2) = "(" ++ showExpr(exp1) ++ " + " ++ showExpr(exp2) ++ ")"
+showExpr (Sub exp1 exp2) = "(" ++ showExpr(exp1) ++ " - " ++ showExpr(exp2) ++ ")"
+showExpr (Mult exp1 exp2) = "(" ++ showExpr(exp1) ++ " * " ++ showExpr(exp2) ++ ")"
+showExpr (Div exp1 exp2) = "(" ++ showExpr(exp1) ++ " / " ++ showExpr(exp2) ++ ")"
+showExpr (Mod exp1 exp2) = "(" ++ showExpr(exp1) ++ " % " ++ showExpr(exp2) ++ ")"
+
 
 -- linkedList 
+
 data LinkedList a = Vazia | No a (LinkedList a) deriving (Eq, Show)
 fromList [x] = No x Vazia
 fromList (x:xs) = No x (fromList xs)
@@ -36,10 +63,13 @@ lastMiddlePar xs = reverse (take (div (length xs) 2) (reverse xs))
 lastMiddleImpar xs = reverse (take ((div (length xs) 2)+1) (reverse xs))
 
 -- eqsplits 
-
+eqsplits :: (Eq a, Num a) => [a] -> [([a], [a])]
+eqsplits xs = [ (a,b) | (a,b) <- splits xs, sum a == sum b ]
 
 -- splits 
--- splits xs = 
+splits :: [a] -> [([a],[a])]
+splits [] = [([],[])]
+splits (x:xs) = [(x:y,z) | (y,z) <- splits xs] ++ [(y,x:z) | (y,z) <- splits xs]
 
 -- numPassageiros
 data Trem a = Vagao a ( Trem a ) | Vazio deriving Show
