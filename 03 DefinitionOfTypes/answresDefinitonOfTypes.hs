@@ -1,4 +1,5 @@
--- arvoreExpressao 
+-- arvoreExpressao
+
 data ArvoreExpressao = No (Int->Int->Int) ArvoreExpressao ArvoreExpressao| Folha Int
 
 data Expr = Val Int
@@ -9,22 +10,42 @@ data Expr = Val Int
   | Mod Expr Expr
   deriving (Read,Eq,Show)
 
+
 eval :: ArvoreExpressao -> Int
 eval (Folha x) = x
-eval (No (+) exp1 exp2) = eval (exp1) + eval (exp2)
-eval (No (-) exp1 exp2) = eval (exp1) - eval (exp2)
-eval (No (*) exp1 exp2) = eval (exp1) * eval (exp2)
-eval (No (div) exp1 exp2) = div (eval (exp1)) (eval (exp2))
+eval (No (+) exp1 exp2) = eval (exp1) + eval(exp2)
+eval (No (-) exp1 exp2) = eval (exp1) - eval(exp2)
+eval (No (*) exp1 exp2) = eval (exp1) * eval(exp2)
+eval (No (div) exp1 exp2) = div (eval exp1) (eval exp2)
 eval (No (mod) exp1 exp2) = mod (eval exp1) (eval exp2)
 
+-- fromExpr :: Expr -> ArvoreExpressao
+-- fromExpr (Val x) = Folha x
+-- fromExpr (Soma exp1 exp2) = No (+) (fromExpr exp1)  (fromExpr exp2)
+-- fromExpr (Sub exp1 exp2) = No (-) (fromExpr exp1)  (fromExpr exp2)
+-- fromExpr (Mult exp1 exp2) = No (*) (fromExpr exp1)  (fromExpr exp2)
+-- fromExpr (Div exp1 exp2) = No (div) (fromExpr exp1)  (fromExpr exp2)
+-- fromExpr (Mod exp1 exp2) = No (mod) (fromExpr exp1)  (fromExpr exp2)
+
+
+
+-- eval :: ArvoreExpressao -> Int
+-- eval (Folha x) = x
+-- eval (No (+) exp1 exp2) = eval (exp1) + eval (exp2)
+-- eval (No (-) exp1 exp2) = eval (exp1) - eval (exp2)
+-- eval (No (*) exp1 exp2) = eval (exp1) * eval (exp2)
+-- eval (No (div) exp1 exp2) = div (eval (exp1)) (eval (exp2))
+-- eval (No (mod) exp1 exp2) = mod (eval exp1) (eval exp2)
+
+
 -- ex1 = Mod (Mult (Val 3) (Val 4)) (( Div (Val 4) (Val 3) ))
-showExpr :: Expr -> String
-showExpr (Val x) = show x
-showExpr (Soma exp1 exp2) = "(" ++ showExpr(exp1) ++ " + " ++ showExpr(exp2) ++ ")"
-showExpr (Sub exp1 exp2) = "(" ++ showExpr(exp1) ++ " - " ++ showExpr(exp2) ++ ")"
-showExpr (Mult exp1 exp2) = "(" ++ showExpr(exp1) ++ " * " ++ showExpr(exp2) ++ ")"
-showExpr (Div exp1 exp2) = "(" ++ showExpr(exp1) ++ " / " ++ showExpr(exp2) ++ ")"
-showExpr (Mod exp1 exp2) = "(" ++ showExpr(exp1) ++ " % " ++ showExpr(exp2) ++ ")"
+-- showExpr :: Expr -> String
+-- showExpr (Val x) = show x
+-- showExpr (Soma exp1 exp2) = "(" ++ showExpr(exp1) ++ " + " ++ showExpr(exp2) ++ ")"
+-- showExpr (Sub exp1 exp2) = "(" ++ showExpr(exp1) ++ " - " ++ showExpr(exp2) ++ ")"
+-- showExpr (Mult exp1 exp2) = "(" ++ showExpr(exp1) ++ " * " ++ showExpr(exp2) ++ ")"
+-- showExpr (Div exp1 exp2) = "(" ++ showExpr(exp1) ++ " / " ++ showExpr(exp2) ++ ")"
+-- showExpr (Mod exp1 exp2) = "(" ++ showExpr(exp1) ++ " % " ++ showExpr(exp2) ++ ")"
 
 
 -- linkedList 
@@ -42,15 +63,20 @@ reverseLinkedList (Node x yz) =  fromList(reverse(toList (Node x yz)))
 
 -- mobile 
 data Mobile = Pendente Int | Barra Mobile Mobile deriving (Eq, Show)
-balanceado:: Mobile -> Bool
-balanceado (Pendente x) = True
-balanceado (Barra ab cd) = if (peso ab) == (peso cd) then True else False 
+-- balanceado:: Mobile -> Bool
+balanceado (Pendente x) = x
+balanceado (Barra ab cd) = peso cd 
+-- balanceado (Barra ab cd) = if (peso ab) == (peso cd) then True else False 
 peso :: Mobile -> Int
 peso (Pendente y) = y
 peso (Barra ab cd) = (peso ab) + (peso cd)
 
--- makeMobile 
+m1 = Barra (Barra (Pendente 1) (Pendente 3)) (Pendente 2)
 
+m2 = Barra (Barra (Pendente 32) (Pendente 32)) (Barra (Barra (Barra (Pendente 8) (Pendente 8)) (Barra (Pendente 8) (Barra (Pendente 4) (Pendente 4)))) (Barra (Barra (Pendente 8) (Pendente 8)) (Barra (Pendente 8) (Barra (Pendente 4) (Pendente 4)))))
+
+
+-- makeMobile 
 -- data Mobile = Pendente Int | Barra Mobile Mobile deriving (Eq, Show)
 makeMobile :: [Int] -> Mobile
 makeMobile [x] = Pendente x
@@ -64,6 +90,9 @@ lastMiddleImpar xs = reverse (take ((div (length xs) 2)+1) (reverse xs))
 -- eqsplits 
 eqsplits :: (Eq a, Num a) => [a] -> [([a], [a])]
 eqsplits xs = [ (a,b) | (a,b) <- splits xs, sum a == sum b ]
+-- splits :: [a] -> [([a],[a])]
+-- splits [] = [([],[])]
+-- splits (x:xs) = [(x:y,z) | (y,z) <- splits xs] ++ [(y,x:z) | (y,z) <- splits xs]
 
 -- splits 
 splits :: [a] -> [([a],[a])]
