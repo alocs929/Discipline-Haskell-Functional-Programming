@@ -50,7 +50,6 @@ frequencia y (x:xs) = if y == x then 1 + (frequencia y xs) else frequencia y xs
 data ArvBin a = Vazia | No a ( ArvBin a ) ( ArvBin a ) deriving (Show)
 menorNivelFolha :: ArvBin a -> [a]
 menorNivelFolha t = nivel (menorNivel t) t 
-
 folhas:: Eq a => ArvBin a-> [a]
 folhas (Vazia) = []
 folhas (No x Vazia Vazia) = [x]
@@ -59,7 +58,7 @@ folhas (No x Vazia dir) = folhas dir
 folhas (No x esq dir) = folhas esq ++ folhas dir
 nivel :: Int -> ArvBin a -> [a]
 nivel _ Vazia = []
-nivel 0 (No x esq dir) = [x]
+nivel 0 (No x Vazia Vazia) = [x]
 nivel n (No x esq dir) = ( nivel (n-1) esq ) ++ ( nivel (n-1) dir )
 menorNivel :: ArvBin a -> Int
 menorNivel (No x Vazia Vazia) = 0
@@ -82,15 +81,37 @@ removeFolhas (No a Vazia Vazia) =  Vazia
 removeFolhas (No a esq dir) =  No a (removeFolhas esq) (removeFolhas dir)
 
 
+
 -- [Tipo Arvore Binaria] cheia 
+data ArvBin a = Vazia | No a ( ArvBin a ) ( ArvBin a ) deriving (Show)
+cheia :: ArvBin a -> Bool
+cheia Vazia = True
+cheia (No a Vazia Vazia) = True
+cheia (No a esq Vazia) = False
+cheia (No a Vazia dir) = False
+cheia (No a esq dir) = True && cheia esq && cheia dir 
 
 
 
 -- [Tipo MultiSet] insere 
+data MultiSet a = MultiSet [(a,Int)] deriving (Show)
+-- insere :: a -> MultiSet a -> MultiSet a
+insere a (MultiSet xs) = MultiSet(insereAux a xs)
+insereAux a [] = [(a,1)]
+insereAux a ((b,c):xs)
+  | a == b = ((b,c+1):xs)
+	| a < b = (a,1):(b,c):xs
+	| a > b = (b,c):(insereAux a xs)
 
 
 
--- [Tipo Multiset] delee
-
-
-
+-- [Tipo Multiset] delete
+data MultiSet a = MultiSet [(a,Int)] deriving (Show)
+-- delete :: a -> Int -> MultiSet a
+delete a b (MultiSet xs) = MultiSet(deleteAux a b xs)
+deleteAux a b [] = []
+deleteAux a b ((y,z):xs)
+  | a == y && b < z = (y,b-z):xs
+  | a == y && b >= z = xs
+  | a > y = (y,z):(deleteAux a b xs)
+  | otherwise = (y,z):xs
