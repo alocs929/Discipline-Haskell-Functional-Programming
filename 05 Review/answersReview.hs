@@ -55,6 +55,7 @@ pell' xs =  [z] ++ pell' (xs++[z])
 
 --[Recursao]binario
 binario :: Int -> [Int]
+binario 0 = [0]
 binario 1 = [1]
 binario n = [mod n 2] ++ binario (div n 2)
 
@@ -89,6 +90,7 @@ maior (a:b:xs)
 
 
 --[Recursao]fracaoContinua
+--Sem tentativa! Desculpa :'(
 
 
 
@@ -104,16 +106,29 @@ caminho ab (x:yz) = if tamList == tamde then True else False
 
 
 --[Tipo Arvore]kMaior
-
+--Sem tentativa! Desculpa :'(
 
 
 --[Tipo Arvore]isHeap
-
+data Arvore a = Vazia | No a (Arvore a) (Arvore a) deriving (Show)
+isHeap Vazia = True
+isHeap (No x Vazia Vazia) = True
+isHeap (No x esq dir) = maiorQ x esq && maiorQ x dir && isHeap esq && isHeap dir
+maiorQ x Vazia = True
+maiorQ x1 (No x2 esq dir) = x1 > x2
 
 
 --[Tipo Arvore]minMax
+data Arv a = Vazia | No a ( Arv a ) ( Arv a ) deriving (Eq , Show)
+minMax :: Ord a => Arv a -> (a,a)
+minMax Vazia = (0,0)
+minMax (No a esq dir) = (mini (No a esq dir), maxi (No a esq dir))
+mini (No a Vazia _) = a
+mini (No a esq _) = mini esq
+maxi (No a _ Vazia) = a
+maxi (No a _ dir) = maxi dir
 
 
 
 --[Desafio]coconut
-
+--Sem tentativa! Desculpa :'(

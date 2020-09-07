@@ -25,5 +25,6 @@ makeQueue :: [a] -> Queue a
 makeQueue xs = foldl (flip enqueue) empty xs
 
 size :: Queue a -> Int
-size s | isEmpty s = 0
-			 | otherwise = 1 + size (dequeue s)
+size s
+	| isEmpty s = 0
+	| otherwise = 1 + size (dequeue s)

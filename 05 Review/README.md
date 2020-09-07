@@ -1,5 +1,3 @@
-# Answers
-
 # [Tuplas]tribonacci
 
 A sequencia de Tribonacci é uma generalização da sequência de Fibonacci sendo que cada termo é a soma dos três anteriores.
@@ -232,4 +230,48 @@ getValue (No x esq dir) = x
 
 # [Tipo Arvore]minMax
 
+Considere a seguinte definição de árvore binária:
+
+```haskell
+data Arv a = Vazia | No a ( Arv a ) ( Arv a ) deriving (Eq , Show)
+```
+
+Escreva a função minMax :: Ord a => Arv a -> (a,a) tal que (minMax arv)
+devolve o menor e o maior elemento numa árvore de pesquisa ordenada arv não vazia tal que os valores menores ou iguais ao elemento raiz estão na subárvore da esquerda e os valores maiores estão na subárvore da direita.
+
+```haskell
+minMax (No 4 (No 1 Vazia (No 3 Vazia Vazia)) (No 7 Vazia Vazia)) == (1,7)
+minMax (No 4 (No 2 (No 1 Vazia Vazia) Vazia) (No 17 (No 10 (No 9 (No 5 Vazia Vazia) Vazia) Vazia) Vazia)) == (1,17)
+```
+
+PS: Não vale fazer o pecurso em ordem na árvore.
+
 # [Desafio]coconut
+
+A história conta sobre cinco homens e um macaco que naufragaram em uma ilha. Eles passaram a primeira noite reunindo cocos. Durante a noite, um homem acordou e decidiu tomar sua parte dos oscocos. Ele os dividiu em cinco pilhas. Um coco sobrou então ele deu para o macaco, depois escondeu sua parte e voltou a dormir.
+
+Logo um segundo homem acordou e fez a mesma coisa. Depois de dividir os cocos em cinco pilhas, sobrou um coco que ele deu ao macaco. Ele então escondeu sua parte e voltou para a cama.
+
+O terceiro, quarto e quinto homem seguiam exatamente o mesmo procedimento. Na manhã seguinte, depois que eles todos acordaram, dividiram os cocos remanescentes em cinco partes iguais. Desta vez não havia cocos sobrando.
+
+Uma pergunta óbvia é "quantos cocos eles originalmente reuniram?”. Há um infinito número de respostas, mas a mais menor delas é de 3121. Mas isso não é problema nosso aqui.
+
+Suponhamos que resolvamos o problema. Se sabemos o número de cocos que foram recolhidos, qual é o número máximo de pessoas (e um macaco) que poderiam ter naufragado se o mesmo procedimento poderia ocorrer?
+
+Defina uma função coconut :: Int -> Int tal que (coconut cocos) devolve o número máximo de pessoas com um macaco poderiam ter naufragado se o mesmo procedimento acontecesse e devolve -1 caso não seja possível realizar o mesmo procedimento.
+
+```haskell
+coconut 25 == 3
+coconut 997 == 3
+coconut 10 == -1
+```
+
+Explicação para o caso 1:
+
+O primeiro marinheiro encontra 25 cocos divide em 3 partes com 8 cocos e sobra 1 coco para o macaco.
+
+O segundo marinheiro encontra 16 cocos divide em 3 partes com 5 cocos e sobra 1 coco para o macaco
+
+O terceiro marinheiro encontra 10 cocos divide em 3 partes com 3 cocos e sobra 1 coco para o macaco.
+
+No final sobram 6 cocos que serão divididos em 3 partes com 2 cocos.
