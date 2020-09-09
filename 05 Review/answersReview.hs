@@ -90,8 +90,13 @@ maior (a:b:xs)
 
 
 --[Recursao]fracaoContinua
---Sem tentativa! Desculpa :'(
-
+data Fracao = F Int Int
+fracaoContinua (F a x) = init (fracaoContinua' (F a x))
+fracaoContinua' (F 1 x) = [x]
+fracaoContinua' (F a y) = q:fracaoContinua'(F y r)
+  where
+    q = div a y
+    r = mod a y
 
 
 --[Recursão]caminho
@@ -106,7 +111,15 @@ caminho ab (x:yz) = if tamList == tamde then True else False
 
 
 --[Tipo Arvore]kMaior
---Sem tentativa! Desculpa :'(
+data Arv a = Vazia | No a ( Arv a ) ( Arv a ) deriving (Eq , Show)
+kMaior x (No x esq dir) = lis !! length((lis)-1)
+  where
+    lis = listar (No x esq dir)
+listar :: Arv a -> [a]
+listar (Vazia) = []
+listar (No x esq dir) = listar esq ++ [x] ++ listar dir
+
+
 
 
 --[Tipo Arvore]isHeap
