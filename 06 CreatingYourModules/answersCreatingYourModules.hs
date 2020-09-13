@@ -2,6 +2,7 @@ import Queue
 import Stack
 
 --[Modulo Queue]Josephus
+josephus n k = simula k (makeQueue [1..n])
 pula :: Int -> Queue a -> Queue a
 pula 0 q = q
 pula n q = enqueue x q2
@@ -9,7 +10,6 @@ pula n q = enqueue x q2
   q1 = pula (n-1) q
   x = front q1
   q2 = dequeue q1
-  
 simula :: Int -> Queue a -> Int
 simula k q
   | size q == 1 = front q
@@ -18,33 +18,18 @@ simula k q
   q1 = pula (k-1) q
   q2 = dequeue q1
 
--- josephus n k = simula k (makeQueue [1..n])
-
-
 --[Módulo Queue]Josephus2
--- josephus n k = front (pula (k-1) k) 
+import Queue
+josephus x n = simula (n) (makeQueue [1..x]) []
+pula :: Int -> Queue a -> Queue a
+pula n a | n > 1 = pula (n-1) (dequeue( enqueue (front a) a)) 
+         | otherwise = a
+simula n a xs | size (a) == 1 = xs ++ [front a]
+              | otherwise = simula n (dequeue (pula n (a))) (xs++[(front (pula n (a)))])
 
 
 
 --[Módulo Stack]NotaçãoPolonesaReversa
-polonesa :: String -> Int
-polonesa xs = polonesaAux (words xs) (emptyStack)
-
-polonesaAux [] p = top p
-polonesaAux (x:xs) p 
-  | x == "+"  = polonesaAux xs (push (v1 + v2) q2)
-  | x == "-"  = polonesaAux xs (push (v2 - v1) q2)
-  | x == "*"  = polonesaAux xs (push (v1 * v2) q2)
-  | x == "/"  = polonesaAux xs (push (div v2 v1) q2)
-  | otherwise = polonesaAux xs (push (converte x) p)
-  where
-  v1 = top p
-  q1 = pop p
-  v2 = top q1
-  q2 = pop q1	
-
-converte :: String -> Int
-converte x = (read :: String -> Int) x 
 
 
 
@@ -59,9 +44,16 @@ isograma xs = Set.size s == length zs
 
 
 --[Módulo Data.Set e Data.Char]pangrama
+import Data.Char
+import qualified Data.Set as Set
+isPanagram text = Set.size (Set.fromList letras) == 26
+  where
+    letras = (filter.map toLower) text
+
 
 
 --[Módulo Data.Set] numeroTrocas
+
 
 
 --[Data.Map] Palavras palindrômicas
@@ -72,43 +64,4 @@ isograma xs = Set.size s == length zs
 
 --[Data.Map] duplicates
 
-
-
-
-
-
-
-
-
-
-
---[Modulo Queue]Josephus
-
-
-
-
---[Módulo Queue]Josephus2
-
-
-
---[Módulo Stack]NotaçãoPolonesaReversa
-https://github.com/leticiaSaraiva/Functional-Programming/blob/0a12a64b5e64952da2ee329e1bd69afbbe773f47/RPN.hs
-
-
---[Modulo Data.Set] isograma
-
-
---[Módulo Data.Set e Data.Char]pangrama
-
-
---[Módulo Data.Set] numeroTrocas
-
-
---[Data.Map] Palavras palindrômicas
-
-
---[Data.Map] transformaAnagrama
-
-
---[Data.Map] duplicates
 
