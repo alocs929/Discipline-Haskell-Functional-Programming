@@ -1,3 +1,4 @@
+
 --[Classes de Tipos]NumerosComplexos
 
 
@@ -94,8 +95,7 @@ multMtx m1 m2 = [ [somaMulti ri rj | rj <- m2inversa] | ri <- m1 ]
 matrixTransposta ([]:_) = []
 matrixTransposta xs = (map head xs) : matrixTransposta (map tail xs)
 
--- transforma listas de listas de
--- floats numa matriz
+-- transforma listas de listas de floats numa matriz
 listToMatrix :: [Row] -> Matrix
 listToMatrix xs = Matrix (length xs) (length (head xs)) xs
 
@@ -124,10 +124,48 @@ ganhadores xs = if conv (last xs) then ganhadores (init xs) ++[length xs - 1] el
 
 
 --[Classe de Tipos]Pessoa
+import Data.List
+data Pessoa = Pessoa { nome :: String, idade :: Int, salario :: Float }
+data Criterio = ByNome | ByIdade | BySalario
 
+pessoas :: [Pessoa]
+pessoas = [ Pessoa "Joao" 25 2000, Pessoa "Ana" 20 2500, Pessoa "Alyson" 22 2200]
+
+instance Show Pessoa where
+    show (Pessoa nome idade salario) = show nome ++ " tem " ++ show idade ++ " anos e ganha de salario " ++ show salario  
+
+compareNome :: Pessoa -> Pessoa -> Ordering
+compareNome (Pessoa nome1 idade1 salario1) (Pessoa nome2 idade2 salario2)
+  | compare nome1 nome2 == GT = GT
+  | otherwise = LT
+
+compareIdade :: Pessoa -> Pessoa -> Ordering
+compareIdade (Pessoa nome1 idade1 salario1) (Pessoa nome2 idade2 salario2) 
+  | compare idade1 idade2 == GT = GT
+  | otherwise = LT
+
+compareSalario :: Pessoa -> Pessoa -> Ordering
+compareSalario (Pessoa nome1 idade1 salario1) (Pessoa nome2 idade2 salario2)
+  | compare salario1 salario2 == GT = GT
+  | otherwise = LT
+
+sortListPessoa :: [Pessoa] -> Criterio -> [Pessoa]
+sortListPessoa pessoas ByNome = sortBy compareNome pessoas
+sortListPessoa pessoas ByIdade = sortBy compareIdade pessoas
+sortListPessoa pessoas BySalario = sortBy compareSalario pessoas
 
 
 
 
 --[Classe de Tipos]Polinomio
+import Polinomio
+makePol :: (Eq a, Num a) => [a] -> Polinomio a
+makePol [] = polZero
+makePol (x:xs) = if x==0 then makePol xs else consPol x ( length xs ) ( makePol xs )
+
+derivada x = if  m == 0 then polZero else consPol ( a * b ) ( a - 1 ) ( derivada c )
+	where
+    a = grau x
+    b = coefLider x
+    c = restoPol x
 

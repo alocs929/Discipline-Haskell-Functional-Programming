@@ -1,5 +1,7 @@
 module Polinomio (Polinomio, polZero, isPolZero, grau, coefLider, restoPol, consPol) where
+
 data Polinomio a = Pol [(a,Int)] deriving (Show,Eq)
+
 
 polZero :: Polinomio a
 polZero = Pol []
