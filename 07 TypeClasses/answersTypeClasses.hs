@@ -1,5 +1,28 @@
-
 --[Classes de Tipos]NumerosComplexos
+import Text.Printf
+data Complex = Complex { real :: Float,img :: Float } deriving (Eq)
+
+instance Show Complex where
+    show (Complex a b)= concat [printf "%.3f" a, " + ", printf "%.3f" b, "i"]
+
+instance Num Complex where
+  (+) c1 c2       = somaComplexo c1 c2
+  (-) c1 c2       = subComplexo c1 c2
+  (*) c1 c2       = mulComplexo c1 c2
+  negate c        = negtivo c
+  abs c           = absoluto c
+  signum c        = sinal c
+  fromInteger n   = apartirInteiro n
+
+somaComplexo (Complex a b) (Complex c d) = Complex (a+c) (b+d)
+subComplexo (Complex a b) (Complex c d) = Complex (a-c) (b-d)
+mulComplexo (Complex a b) (Complex c d) = Complex (a*c - b*d) (a*d + b*c)
+apartirInteiro n = Complex (fromInteger n) 0
+negtivo (Complex a b) = Complex (-a) (-b)
+absoluto (Complex a b) = Complex (sqrt (a*a + b*b)) 0 
+sinal c@(Complex a b) = Complex (a/r) (b/r)
+  where
+    r = real (absoluto (Complex a b))
 
 
 
@@ -163,9 +186,8 @@ makePol :: (Eq a, Num a) => [a] -> Polinomio a
 makePol [] = polZero
 makePol (x:xs) = if x==0 then makePol xs else consPol x ( length xs ) ( makePol xs )
 
-derivada x = if  m == 0 then polZero else consPol ( a * b ) ( a - 1 ) ( derivada c )
+derivada x = if  a == 0 then polZero else consPol ( a * b ) ( a - 1 ) ( derivada c )
 	where
     a = grau x
     b = coefLider x
     c = restoPol x
-
